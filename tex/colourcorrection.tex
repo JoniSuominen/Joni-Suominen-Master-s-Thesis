@@ -1,0 +1,14 @@
+\chapter{Colour Correction}%
+\label{ch:cc}
+
+Colour correction is a step in the imaging pipeline responsible for producing images, that are understood by the display. As displays and cameras natively operate in different colour spaces, a mathematical transformation has to be performed. Moreover, each camera has slightly different spectral responsivities, which is why these transformations are unique for each manufactured camera. Due to this, the step is often called colour characterisation or colour space transformation.
+
+\section{Problem formulation}
+
+As was discussed before, the need for colour correction arises from the differences between the spectral responsivities of the human eye and the camera. A camera is said to be colourimetric if its spectral responsivities are a linear combination of the human eye responsivities, and so it satisfies the Luther-Ives condition \cite{luther, ives, nakamura}. This means that with just a linear transformation the digital camera could perceive colours as we humans do. Unfortunately, none do, and even if one did, it would be extremely difficult to manufacture at mass.
+
+Camera manufacturers thus apply colour correction in the imaging pipeline as was seen in fig \ref{fig:dip}. Typically this is accompanied by the diagonal white balance matrix $D$, which replicates the chromatic adaptation behaviour for achromatic colours in the digital camera, ensuring whites and greys colours are mapped the same under every illuminant. However as the chromatic adaptation does not only apply to achromatic colours, it is then left for the colour correction matrix to compensate for the illuminant in chromatic colours. All colours are then corrected into an output-referred colour space with some reference white, such as sRGB with D65, and thus the effect of the illuminant of the scene is removed. A transformation matrix thus has to be defined for every illuminant, to the illuminant defined by the reference white of the output space.
+
+The major reason for error in colour correction comes from incorrect estimation of the scene illumination, which results in incorrect white balance multipliers and CCMs for the correction process, which further amplifies the error. Furthermore, colour correction matrices are often derived for different light levels, sacrificing saturation for noise amplification \cite{satvsnoise}. If the estimation of the scene light level is incorrect, we may pick the wrong matrix and amplify the noise. To alleviate this, we can impose constraints on the optimization process, to enforce smoothness in the coefficients of the matrix and ensure the saturation is within certain limits.
+
+\section{Mathematical formulation}

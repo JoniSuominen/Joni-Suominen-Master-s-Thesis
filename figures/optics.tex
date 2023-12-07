@@ -1,0 +1,32 @@
+\begin{tikzpicture}
+    % Optical Axis
+    \draw[->] (-4,0) -- (8,0) node[right] {Optical Axis};
+    
+    % Object
+    \draw[thick] (-2,0) -- (-2,2) node[midway,left] {Object};
+    
+    % Lens
+    \draw[thick] (0,-3) -- (0,3);
+    \draw[->] (0,-3.2) -- (0,3.2) node[midway, xshift=0.5cm, yshift=0.5cm] {Lens};    
+    % Focal Points
+    \fill[red] (3,0) circle (2pt) node[below] {$F$};
+    \fill[red] (-3,0) circle (2pt) node[below] {$F'$};
+    
+    % Image
+    \draw[thick,blue] (4,0) -- (4,-1.5) node[midway,right] {Image};
+    
+    % Distance indicators
+    \draw[<->, black] (-2, 2.5) -- (0, 2.5) node[midway, above] {$d_o$};
+    \draw[<->, black] (0, 2.5  ) -- (4, 2.5) node[midway, above] {$d_i$};
+    
+    % Rays
+    % Ray parallel to optical axis
+    \draw[->,red] (-2,2) -- (0,2);
+    \draw[->,red] (0,2) -- (3,0);
+    \draw[->,red] (3,0) -- (4,-1.5);
+    
+    % Ray through F
+    \draw[->,green] (-2,2) -- (0,0);
+    \draw[->,green] (0,0) -- (4,-1.5);
+    
+\end{tikzpicture}
