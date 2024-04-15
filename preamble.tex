@@ -14,8 +14,8 @@
 % document! This can dramatically reduce compilation time.
 
 % Graphs
-\usepackage{pgfplots}
-\pgfplotsset{compat=1.15}
+% \usepackage{pgfplots}
+%\pgfplotsset{compat=1.15}
 
 % Subfigures and wrapping text
 % \usepackage{subcaption}
@@ -52,7 +52,7 @@
 % \usepackage[version=4]{mhchem}
 
 % Text hyperlinking
-% \usepackage{hyperref}
+\usepackage{hyperref}
 % \hypersetup{hidelinks}
 
 % (SI) unit handling
@@ -60,9 +60,10 @@
 
 \sisetup{
     detect-all,
-    math-sf=\mathrm,
     exponent-product=\cdot,
-    output-decimal-marker={,} % for theses in FINNISH!
+    output-decimal-marker={,}, % for theses in FINNISH!,
+    per-mode=fraction,
+    fraction-function=\tfrac
 }
 
 %%%%% Your commands.
@@ -113,7 +114,7 @@
 % Use this line if using the default glossary.
 % Otherwise comment out.
 
-\loadglsentries[main]{tex/sanasto.tex}
+\loadglsentries[main]{tex/glossary.tex}
 
 % Use this line if using more than one glossary.
 % Otherwise comment out.
@@ -160,3 +161,36 @@
 %\DefineBibliographyExtras{english}{\let\finalandcomma=\empty}
 
 \addbibresource{tex/references.bib}
+\usepackage{neuralnetwork}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage{microtype}
+
+  \setlength\heavyrulewidth{0.20ex}
+  \setlength\cmidrulewidth{0.10ex}
+  \setlength\lightrulewidth{0.10ex}
+\newcommand{\inputneuron}[2]{
+    \ifnum #2=1
+        R
+    \else
+        \ifnum #2=2
+            G
+        \else
+            B
+        \fi
+    \fi
+}
+
+\newcommand{\outputneuron}[2]{
+    \ifnum #2=1
+        X
+    \else
+        \ifnum #2=2
+            Y
+        \else
+            Z
+        \fi
+    \fi
+}

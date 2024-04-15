@@ -33,8 +33,8 @@
 
 %%%%% CLASS OPTIONS %%%%%
 
-\newcommand{\@mainlanguage}{finnish}
-\newcommand{\@otherlanguage}{english}
+\newcommand{\@mainlanguage}{english}
+\newcommand{\@otherlanguage}{finnish}
 \newcommand{\@citationstyle}{numeric}
 \newcommand{\@citationsorting}{none}
 \newif\if@customcitation\@customcitationtrue
@@ -98,7 +98,6 @@
 
 % UTF-8 input
 \RequirePackage[utf8]{inputenc}
-
 % Arial-like font selection
 \RequirePackage[scaled=0.91]{helvet}
 \RequirePackage[T1]{fontenc}
@@ -216,7 +215,8 @@
     [backend=biber,
     autolang=other,
     citestyle=\@citationstyle,
-    bibstyle=\@citationstyle]{biblatex}
+    bibstyle=\@citationstyle,
+    maxcitenames=1]{biblatex}
 
 \DefineBibliographyStrings{finnish}{%
     bibliography = {Lähteet},
@@ -632,11 +632,6 @@ The originality of this thesis has been checked using the Turnitin OriginalityCh
 \end{filecontents*}
 
 %% Load the data from the metadata file with pdfx.
-
-\if@taunotdraftmode
-    \RequirePackage[a-2b,mathxmp]{pdfx}
-    \catcode30=12
-\fi
 
 \makeatother
 

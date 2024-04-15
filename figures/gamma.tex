@@ -1,0 +1,38 @@
+\documentclass[tikz,border=10pt]{standalone}
+\usepackage{xcolor}
+\usepackage{tikz}
+
+\begin{document}
+
+\begin{tikzpicture}
+    % Constants
+    \def\boxWidth{1}
+    \def\boxHeight{0.5}
+    \def\numBoxes{11}
+    \def\gammaValue{2.2} % Adjust this value for different gamma corrections
+
+    % Draw the perceived brightness boxes
+    \foreach \x in {0,...,\numBoxes}
+    {   
+        \pgfmathsetmacro\shade{(\x/\numBoxes)^(1/\gammaValue)}
+        \definecolor{currentcolor}{rgb}{\shade,\shade,\shade}
+        \fill[currentcolor] (\x*\boxWidth,0) rectangle ++(\boxWidth,\boxHeight);
+        \draw (\x*\boxWidth,0) rectangle ++(\boxWidth,\boxHeight);
+        \node at (\x*\boxWidth + 0.5*\boxWidth, 0.25*\boxHeight) {\tiny\pgfmathprintnumber[precision=1,fixed]{\x/\numBoxes}};
+    }
+    \node[anchor=east] at (0,0.25*\boxHeight) {Perceived (linear) brightness};
+
+    % Draw the physical brightness boxes
+    \foreach \x in {0,...,\numBoxes}
+    {
+        \pgfmathsetmacro\shade{\x/\numBoxes}
+        \definecolor{currentcolor}{rgb}{\shade,\shade,\shade}
+        \fill[currentcolor] (\x*\boxWidth,-1.5*\boxHeight) rectangle ++(\boxWidth,\boxHeight);
+        \draw (\x*\boxWidth,-1.5*\boxHeight) rectangle ++(\boxWidth,\boxHeight);
+        \node at (\x*\boxWidth + 0.5*\boxWidth, -1.25*\boxHeight) {\tiny\pgfmathprintnumber[precision=1,fixed]{\x/\numBoxes}};
+    }
+    \node[anchor=east] at (0,-1.25*\boxHeight) {Physical (linear) brightness};
+
+\end{tikzpicture}
+
+\end{document}

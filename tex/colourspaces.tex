@@ -25,15 +25,37 @@ Three different colour spaces are shown on a chromaticity diagram in \ref{fig:ga
 \subsection{Reference colour spaces}
 
 Colour spaces which contain all colours in the visible range are known as reference colour spaces. These include 
-for example the CIE XYZ colour space seen in figure \ref{fig: gamut}. Reference spaces allow us to move to other linearly related spaces by changing their basis, which makes them convenient. Furthermore, they are often used as target colour space when the input is in camera-specific colour space. \cite[224-225]{rowlands2020physics}
+for example the CIE XYZ colour space seen in Figure \ref{fig:gamut}. Reference spaces allow us to move to other linearly related spaces by changing their basis, which makes them convenient. Furthermore, they are often used as target colour space when the input is in camera-specific colour space.
 
 
 \subsection{Output-referred spaces}
 
-Output-referred colour spaces define a standard for output devices, ensuring manufacturers interpret a set of colour values similarly. Otherwise, two manufacturers could use proprietary formats and thus an image would produce different colours on different devices. To this date, output-referred colour spaces occupy only a subset of the reference colour spaces, partially because an additive mixture of three primaries cannot represent all colours visible to humans \cite[65]{colorimetry}. The most common colour spaces, such as sRGB and Adobe RGB, are based on red, green and blue primaries and thus only a subset is reproducible as is visible in \ref{fig:gamut}.
+Output-referred colour spaces define a standard for output devices, ensuring manufacturers interpret a set of colour values similarly. Otherwise, two manufacturers could use proprietary formats and thus an image would produce different colours on different devices. To this date, output-referred colour spaces occupy only a subset of the reference colour spaces, partially because an additive mixture of three primaries cannot represent all colours visible to humans, as was discussed in \ref{sec:responsivity}. The most common colour spaces, such as sRGB and Adobe RGB, are based on red, green and blue primaries, therefore only a subset is reproducible as is visible in Figure \ref{fig:gamut}.
 
 \subsection{Uniform colour spaces}
 
-It is often necessary to measure the difference between two colours, such as to compare how accurately an algorithm produces colours compared to how an observer would have seen them. However, even when using reference color spaces with a geometrical interpretation, it is not guaranteed that two pairs of colours with the same geometrical distance will appear equally different to an observer. To optimize algorithms for perceptual quality, it is important to create colour spaces that take this into account.
+It is often necessary to measure the difference between two colours, such as to compare how accurately an algorithm produces colours compared to how an observer would have seen them. However, even when using reference colour spaces with a geometrical interpretation, it is not guaranteed that two pairs of colours with the same distance will appear equally different to an observer \cite[48-49]{measuringcolour}. To optimize algorithms for perceptual quality, it is important to create colour spaces that take this into account.
 
-Uniform color spaces, although not perfect, attempt to ensure that colours with the same distance in the space correspond to being equally different to an observer.
+As described in \cite[53-57]{measuringcolour}, uniform colour spaces, although not perfect, attempt to ensure that colours with the same distance in the space correspond to being equally different to an observer. Two colour spaces, introduced in 1976, are primarily used to this date: CIELUV and CIELAB \cite{cielab}. In both spaces, $L$ refers to the lightness of the colour (luminance in grey scale), while $u,v$ and $a,b$ are the chromaticity coordinates. Both hue-angle (dominant wavelength) and chroma (purity of the colour) can be computed from the chromaticity coordinates. For CIELUV, saturation can also be computed \cite[51]{measuringcolour}, although chroma is often used instead.
+
+Perhaps most importantly, these colour spaces can be used to approximate perceptual differences between colours. Often these metrics define a unit for just noticeable difference (JND), which in colour science would refer to the amount a colour would have to be changed before an average observer would notice a difference.
+
+Since CIELUV and CIELAB are approximately uniform, the easiest metric to implement is the Euclidean distance between two colours. In the CIELAB space, this is known as the CIE76 or $\Delta E^{*}$ formula and is given by
+
+\begin{equation}
+\label{eq:cie76}
+\Delta E^* = \sqrt{(L_2^* - L_1^*)^2 + (a_2^* - a_1^*)^2 + (b_2^* - b_1^*)^2}
+,
+\end{equation}
+
+where $\Delta E^*$ is the total colour difference, $L_1^*$ and $L_2^*$ are the lightness values of the first and second colours, 
+$a_1^*$ and $a_2^*$ are the $a^*$ chromaticity values of the first and second colours
+$b_1^*$  and $b_2^*$ are the $a^*$ chromaticity values s of the first and second colours.
+
+Since then, even more accurate formulas have been introduced, such as the CIEDE2000 colour difference formula \cite{ciede2000dev}.
+
+\section{Device-dependent colour spaces}
+
+ Each device produces its own set of RGB values, even if they were used to capture exactly the same scene. This makes it ambigious to interpret the values produced by a camera for a display device. There is not even guarantee that different units of the same camera model will produce exactly the same response. 
+ 
+ All of this is explained by the difference in spectral responsivities of the imaging system, for example the responsivities for Nikon D5100 seen in Figure \ref{fig:d5100} would differ depending on the exact unit from the factory \cite{walowit2019best}. These differences are often mitigated by performing calibration per camera unit, adjusting for example the colour correction matrix multipliers discussed in \ref{ss:cc}. This, in principle, should minimize the error in the output. Furthermore, after applying colour correction we can compare the gamuts of the camera to the reference colour spaces, as we now have access to the known transformations between spaces \cite{rowlands2020color}.

@@ -34,15 +34,16 @@ fill=green!30]
 \begin{tikzpicture}[node distance=2cm]
 
 \node (start) [startstop] {Raw Image};
-\node (in1) [process, right of=start, xshift=2cm] {Pre-processing};
-\node (pro1) [process, right of=in1, xshift=2cm] {White Balance};
-\node (dec1) [process, right of=pro1, xshift=2cm] {Demosaic};
+\node (in1) [process, right of=start, xshift=2cm] {Black Level Subtraction};
 
-\node (pro2a) [process, below of=dec1, yshift=-0.5cm] {Colour\\ Correction};
+\node (pro1) [process, right of=in1, xshift=2cm] {Lens Shading Correction};
+\node (dec1) [process, right of=pro1, xshift=2cm] {White Balance};
 
-\node (pro2b) [process, left of=pro2a, xshift=-2cm] {Gamma Correction};
-\node (pro2c) [process, left of=pro2b, xshift=-2cm] {Post-processing};
-\node (pro2d) [startstop, left of=pro2c, xshift=-2cm] {Display};
+\node (pro2a) [process, below of=dec1, yshift=-0.5cm] {Demosaic};
+
+\node (pro2b) [process, left of=pro2a, xshift=-2cm] {Color Space Transform};
+\node (pro2c) [process, left of=pro2b, xshift=-2cm] {Gamma};
+\node (pro2d) [startstop, left of=pro2c, xshift=-2cm] {Post-Processing};
 
 
 

@@ -66,25 +66,23 @@
 % PDF file to comply to accessibility standards. (And yes, this information
 % must remain here, before \documentclass[...]{...}.)
 
-\def\myfititle{Värinkorjaus Spliiineillä}
-\def\myentitle{Värinkorjaus Spline-käyrillä}
+\def\myfititle{Värinkorjaus Splineillä}
+\def\myentitle{Colour Correction using Splines}
 \def\myauthor{Joni Suominen}
-\def\myfisubtitle{Tarkentava alaotsikko}
-\def\myensubtitle{A Specifying Subtitle}
-\def\myfithesistype{Opinnäytetyön taso}
+\def\myfithesistype{Diplomityö}
 \def\myenthesistype{M.Sc Thesis}
-\def\myexaminers{Professor Karen Equiazarian \\ Researcher Vladimir Katkovnik \\ ...}
-\def\myfifacultyname{Tiedekunnan nimi}
-\def\myenfacultyname{The name of the faculty}
-\def\myfiprogrammename{Tutkinto-ohjelman nimi}
-\def\myenprogrammename{The name of the study programme}
-\def\myfikeywords{avainsana1, avainsana2, ...}
-\def\myenkeywords{keyword1, keyword2, ...}
-\def\mylanguagecode{en-US}
+\def\myexaminers{Professor Karen Eguiazarian \\ Researcher Vladimir Katkovnik}
+\def\myfifacultyname{Informaatioteknologian ja viestinnän tiedekunta}
+\def\myenfacultyname{Faculty of Information Technology and Communication Sciences}
+\def\myfiprogrammename{Tietotekniikan DI-ohjelma}
+\def\myenprogrammename{ Master's Programme in Information Technology}
+\def\myfikeywords{Värinkorjaus, Kameran karakterisointi, Spektriherkkyys, Splini, Väritiede}
+\def\myenkeywords{Colour correction, Camera characterisation, Colour science, Spectral sensitivity, Spline}
+\def\mylanguagecode{en-GB}
 \def\mysubject{A short description of the thesis subject.}
-\def\myyear{2023}
-\def\mymonth{06}
-\def\myday{03}
+\def\myyear{2024}
+\def\mymonth{04}
+\def\myday{15}
 
 %%%%% PREAMBLE %%%%%
 
@@ -127,11 +125,11 @@
 % Finnish only need the first abstract. The second argument of the \preface
 % command takes the place where the thesis was signed in.
 
-\abstract{tex/tiivistelma.tex}
+\abstract{tex/abstract.tex}
 
-\otherabstract{tex/abstract.tex}
+\otherabstract{tex/tiivistelma.tex}
 
-\preface{tex/alkusanat.tex}{Tampereella}
+\preface{tex/alkusanat.tex}{Tampere}
 
 %%%%% Table of contents.
 
@@ -143,7 +141,7 @@
 % as required. Both are optional, but if there are many important
 % figures/tables, listing them may be a good idea.
 
-% \listoffigures
+\listoffigures
 % \listoftables
 % \lstlistoflistings
 
@@ -159,7 +157,7 @@
 % Print the default glossary of abbreviations, if necessary. Otherwise comment
 % out. The appropriate Finnish variant is 'Lyhenteet'
 
-\printglossary[title={Lyhenteet ja merkinnät}]
+\printglossary[title={Glossary}]
 
 % Print more than one glossary with these lines. Otherwise comment out.
 
@@ -179,7 +177,6 @@
 
 \input{tex/hvs}
 \input{tex/colorimaging}
-\input{tex/colourspaces}
 \input{tex/colourcorrection}
 \input{tex/algorithm}
 \input{tex/results}
@@ -197,11 +194,4 @@
 %%%%% Appendices.
 % Use only if it clarifies the structure of the document. Remember to
 % introduce each appendix and its content.
-
-\begin{appendices}
-
-\input{./tex/liite.tex}
-
-\end{appendices}
-
 \end{document}

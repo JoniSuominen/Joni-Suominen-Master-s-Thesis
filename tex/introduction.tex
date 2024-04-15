@@ -1,7 +1,36 @@
 \chapter{Introduction}%
 \label{ch:introduction}
 
-Digital cameras have become indispensable tools in today's society, playing pivotal roles across scientific research, industrial applications, and consumer needs. However, their spectral sensitivities differ markedly from the human visual system, leading to discrepancies in color representation and interpretation. Such deviations not only impact aesthetic quality but also significantly affect the accuracy of data-dependent applications, such as computer vision, medical imaging, and remote sensing. 
+Digital cameras have become indispensable tools in today's society, with increasing applications in areas such as autonomous driving, virtual reality, and mobile photography. One of the main challenges in designing a digital camera is to ensure it records colours faithfully. For example, a common requirement in consumer products and professional cameras is that skin tones are rendered correctly \cite{imatest2024skin}. It is plausible that a customer would return a phone if it produced a wrong skin tone when taking a selfie. In professional usage, such as in law enforcement, incorrect skin rendering may prevent accurate identification of individuals from crime scene evidence captured by a body camera. 
 
-To view the colours of the image as if a human had viewed the scene, color correction has to be performed in order to map the colors from the camera's color space to a reference color space related to the HVS.
+The discrepancies in a camera's colour reproduction from how one saw the scene are explained by the differences in the camera's and the human eye's sensitivity to light. This can be observed by obtaining the spectral sensitivities of an image sensor and comparing them to a reference human eye sensitivities. No sensor has the same spectral characteristics as the human eye; thus, further processing is required for accurate colour rendering. This processing step is called colour correction and is the focus of this thesis.
+
+Colour accuracy, like any other image quality attribute, such as noise or dynamic range, is typically evaluated both subjectively and objectively when designing a camera. Image Quality (IQ) experts often tune a camera's colour performance as part of the image processing pipeline. Since subjective tests with actual human participants are expensive and time-consuming, mathematical formulas have been created to simulate the perceived image quality of a typical observer in objective testing \cite[31-32]{phillips2018camera}. These formulas enable experts to instantly see the impact of their adjustments on perceived image quality.
+
+To find a mapping from camera responses to the corresponding human responses, a numerical way to model the human eye must exist. For this purpose, an organisation called CIE (Commission internationale de l'éclairage) published a standard for quantifying the sensitivity of the average human eye to light \cite{cie1931}, known as the XYZ and RGB colour matching functions. The former is most often used in practice and forms the XYZ colour space. This serves as a point of reference when assessing the colour accuracy of a digital camera, commonly utilised in colour correction processes. After performing colour correction, the output is a so-called scene-referred output. Based on user preferences, various processing techniques are used to enhance the visual appeal of the image and adapt it to its intended display format. The resulting image after this fine-tuning process is called the display-referred image.
+
+Relatively simple algorithms, such as variants of polynomial regression \cite{CCvsPol}, \cite{finlayson2015color} and shallow neural networks \cite{macdonald2021camera}, \cite{kucuk2022exposure}, have been proposed to date in the literature. Perhaps the most widely known approach is to find a transformation from the camera responses to the human responses by linear regression. This approach has a few key advantages: it has low computational complexity, works independently of the scene exposure, and performs relatively well independently of the camera.
+
+
+In this thesis, we present a novel method for colour correction based on penalised B-splines (P-splines) 
+\cite{eilers1996flexible}, a method that has been extensively applied in regression problems. It extends the previously proposed polynomial methods, as B-splines are piecewise polynomials with minimal support. It will be demonstrated that highly complex P-spline models can be used without the risk of overfitting, which is a common issue of higher-order polynomial models. 
+
+The choice of using P-splines for colour correction arises from previous observations made in the literature. In \cite{finlayson2015color} and \cite{wandell1993water}, the authors suggested that the transformation from RGB to XYZ is approximately linear, with smooth non-linearities. Splines fit well into this equation, allowing the fit's shape to change locally rather than being global, like polynomial models. From the computational complexity perspective, the presented spline models are similar to neural networks but have the advantage of interpretability, as opposed to the "black box" nature of neural networks. Splines thus offer a good compromise of flexibility, interpretability and performance.
+
+To test the performance of the presented algorithm, we build and make publicly available a comprehensive evaluation framework that contains implementations for the other models previously presented in the literature. We limit the scope of this thesis to evaluating the algorithms' performance on synthetic data computed using spectral data of camera sensitivities, surface reflectances, and light sources. All this spectral data is available to the public, making the results reproducible.
+
+In addition to presenting our novel algorithm, we wish to answer the following questions in this thesis: 
+
+\begin{itemize}
+    \item How does our algorithm fare against its competitors?
+    \item How do training set size and camera spectral sensitivities affect algorithm performance?
+    \item What does the transformation look like? 
+\end{itemize}
+
+This thesis is structured as follows: Chapter 2 presents the main contributors to the human eye's colour-sensing ability. Chapter 3 expands into digital cameras and explores how they can capture colour information and what happens in a typical digital image pipeline. Chapter 4 dives deeper into the problem of colour correction and presents some of the algorithms from the literature. In Chapter 5, we profoundly explain splines and present our algorithm based on P-splines. Chapter 6 
+presents the results of this thesis by comparing different algorithms across two training datasets and two different cameras. We also explore the transformation for each camera, aiming to get an intuition of how the optimal transformation might look. Finally, this thesis is concluded in Chapter 7.
+
+
+
+
 
